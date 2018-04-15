@@ -34,6 +34,8 @@ class ViewController: UIViewController {
     @IBAction func restartGameButton(_ sender: UIButton) {
         print("restartGameButton pressed")
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        emojiChoices = emojiThemeChoices[getRandomTheme()]
+
         updateViewFromModel()
     }
     
@@ -52,10 +54,17 @@ class ViewController: UIViewController {
         }
     }
     
-    var emojiChoices: Array<String> = ["👻", "🎃", "👿", "👹", "💀", "🤡"]
+    var themes = ThemeOptions()
+    lazy var emojiThemeChoices:Array<Array<String>> = themes.getEmojiThemeOptions()
+    
+    fileprivate func getRandomTheme() -> Int{
+        return Int(arc4random_uniform(UInt32(emojiThemeChoices.count)))
+    }
+    
+    lazy var emojiChoices: Array<String> = emojiThemeChoices[getRandomTheme()]
     var emoji = [Int:String] ()//Dictionary<Int, String>()
     
-    func emoji(for card: Card) -> String{
+    fileprivate func emoji(for card: Card) -> String{
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
             let randomIndex = Int (arc4random_uniform(UInt32(emojiChoices.count)))
             emoji[card.identifier] = emojiChoices.remove(at: randomIndex);
