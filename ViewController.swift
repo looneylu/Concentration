@@ -36,6 +36,7 @@ class ViewController: UIViewController {
             updateFlipCountLabel()
         }
     }
+    
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private var cardButtons: [UIButton]! //same as saying Array<UIButtons>
     
