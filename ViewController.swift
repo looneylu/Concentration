@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         return ((cardButtons.count + 1) / 2) 
     }
     private var themes = ThemeOptions()
-    private var emoji = [Int:String] ()//Dictionary<Int, String>()
+    private var emoji = [Card:String] ()//Dictionary<Int, String>()
 
     private(set) var flipCount = 0{
         didSet{
@@ -77,11 +77,11 @@ class ViewController: UIViewController {
     }
     
     private func emoji(for card: Card) -> String{
-        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
+        if emoji[card] == nil, emojiChoices.count > 0 {
             let randomIndex = emojiChoices.count.arc4random
-            emoji[card.identifier] = emojiChoices.remove(at: randomIndex);
+            emoji[card] = emojiChoices.remove(at: randomIndex);
         }
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
 }
 
