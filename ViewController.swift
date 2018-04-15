@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    func updateViewFromModel(){
+    fileprivate func updateViewFromModel(){
         for index in cardButtons.indices{
             let button = cardButtons[index]
             let card = game.cards[index]
