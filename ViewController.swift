@@ -36,7 +36,6 @@ class ViewController: UIViewController {
     @IBOutlet private var cardButtons: [UIButton]! //same as saying Array<UIButtons>
     
     @IBAction private func touchCard(_ sender: UIButton) {
-        flipCount += 1
         if let cardNumber = cardButtons.index(of: sender){
             print("cardNumber = \(cardNumber)")
             game.chooseCard(at: cardNumber)
@@ -55,8 +54,10 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel(){
+        flipCount = game.getFlipCount()
         score = game.getScore()
         print("Score: \(score)")
+        
         for index in cardButtons.indices{
             let button = cardButtons[index]
             let card = game.cards[index]

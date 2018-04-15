@@ -11,6 +11,11 @@ import Foundation
 class Concentration {
     var cards = [Card]() //Array<Card>()
     private var score = 0;
+    private var flipCount = 0;
+    
+    func getFlipCount() -> Int {
+        return flipCount
+    }
     
     func getScore() -> Int {
         return score
@@ -39,6 +44,9 @@ class Concentration {
     
     func chooseCard(at index: Int){
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index not in the cards")
+        
+        flipCount += 1
+        
         if !cards[index].isMatched{
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index{
                 // check if cards match
