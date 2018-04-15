@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 
     private(set) var flipCount = 0{
         didSet{
-            flipCountLabel.text = "Flips: \(flipCount)"
+            updateFlipCountLabel()
         }
     }
     
@@ -31,7 +31,11 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel!{
+        didSet{
+            updateFlipCountLabel()
+        }
+    }
     @IBOutlet private weak var scoreLabel: UILabel!
     @IBOutlet private var cardButtons: [UIButton]! //same as saying Array<UIButtons>
     
@@ -82,6 +86,16 @@ class ViewController: UIViewController {
             emoji[card] = emojiChoices.remove(at: randomIndex);
         }
         return emoji[card] ?? "?"
+    }
+    
+    private func updateFlipCountLabel(){
+        let attributes: [NSAttributedStringKey:Any] = [
+            .strokeWidth : 5.0,
+            .strokeColor : UIColor.orange
+        ]
+        let attributedString = NSAttributedString(string: "Flips: \(flipCount)", attributes: attributes)
+        //flipCountLabel.text = "Flips: \(flipCount)"
+        flipCountLabel.attributedText = attributedString
     }
 }
 
