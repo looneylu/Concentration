@@ -40,5 +40,22 @@ class Concentration {
         }
         
         //TODO: Shuffle Cards
+        shuffleCards()
+    }
+    
+    fileprivate func shuffleCards(){
+        var currentIndex = cards.count
+        
+        //while there are elements to "shuffle"...
+        while currentIndex != 0{
+            //pick a remaining element
+            let randomIndex = Int (arc4random_uniform(UInt32(currentIndex)))
+            currentIndex -= 1
+            
+            //swap with current element
+            let tempValue = cards[currentIndex]
+            cards[currentIndex] = cards[randomIndex]
+            cards[randomIndex] = tempValue
+        }
     }
 }
