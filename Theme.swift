@@ -9,12 +9,12 @@
 import Foundation
 
 class ThemeOptions{
-    fileprivate let maskEmojis: Array<String> = ["👻", "🎃", "👿", "👹", "💀", "🤡"]
-    fileprivate let faceEmojis: Array<String> = ["😀", "😇", "😍", "😎", "😡", "🤯"]
-    fileprivate let animalEmojis: Array<String> = ["🐶", "🐹", "🦊", "🐼", "🐷", "🐵"]
-    fileprivate let foodEmojis: Array<String> = ["🍏", "🍊", "🥥", "🍉", "🍞", "🍔"]
+    private let maskEmojis: Array<String> = ["👻", "🎃", "👿", "👹", "💀", "🤡"]
+    private let faceEmojis: Array<String> = ["😀", "😇", "😍", "😎", "😡", "🤯"]
+    private let animalEmojis: Array<String> = ["🐶", "🐹", "🦊", "🐼", "🐷", "🐵"]
+    private let foodEmojis: Array<String> = ["🍏", "🍊", "🥥", "🍉", "🍞", "🍔"]
     
-    fileprivate lazy var emojiChoices: Array<Array<String>> = [maskEmojis, faceEmojis, animalEmojis, foodEmojis]
+    private lazy var emojiChoices: Array<Array<String>> = [maskEmojis, faceEmojis, animalEmojis, foodEmojis]
     
     func getEmojiThemeOptions() -> Array<Array<String>> {
         return emojiChoices
