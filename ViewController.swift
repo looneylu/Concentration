@@ -10,7 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
     lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-   
+    lazy var emojiThemeChoices:Array<Array<String>> = themes.getEmojiThemeOptions()
+    lazy var emojiChoices: Array<String> = emojiThemeChoices[getRandomTheme()]
+
+    var themes = ThemeOptions()
+    var emoji = [Int:String] ()//Dictionary<Int, String>()
+
     var flipCount = 0{
         didSet{
             flipCountLabel.text = "Flips: \(flipCount)"
@@ -54,15 +59,9 @@ class ViewController: UIViewController {
         }
     }
     
-    var themes = ThemeOptions()
-    lazy var emojiThemeChoices:Array<Array<String>> = themes.getEmojiThemeOptions()
-    
     fileprivate func getRandomTheme() -> Int{
         return Int(arc4random_uniform(UInt32(emojiThemeChoices.count)))
     }
-    
-    lazy var emojiChoices: Array<String> = emojiThemeChoices[getRandomTheme()]
-    var emoji = [Int:String] ()//Dictionary<Int, String>()
     
     fileprivate func emoji(for card: Card) -> String{
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
