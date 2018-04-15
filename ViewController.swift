@@ -9,23 +9,33 @@
 import UIKit
 
 class ViewController: UIViewController {
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-    lazy var emojiThemeChoices:Array<Array<String>> = themes.getEmojiThemeOptions()
-    lazy var emojiChoices: Array<String> = emojiThemeChoices[getRandomTheme()]
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    private lazy var emojiThemeChoices:Array<Array<String>> = themes.getEmojiThemeOptions()
+    private lazy var emojiChoices: Array<String> = emojiThemeChoices[getRandomTheme()]
 
-    var themes = ThemeOptions()
-    var emoji = [Int:String] ()//Dictionary<Int, String>()
+    private var numberOfPairsOfCards: Int{
+        return ((cardButtons.count + 1) / 2) 
+    }
+    private var themes = ThemeOptions()
+    private var emoji = [Int:String] ()//Dictionary<Int, String>()
 
-    var flipCount = 0{
+    private(set) var flipCount = 0{
         didSet{
             flipCountLabel.text = "Flips: \(flipCount)"
         }
     }
     
-    @IBOutlet weak var flipCountLabel: UILabel!
-    @IBOutlet var cardButtons: [UIButton]! //same as saying Array<UIButtons>
+    private var score = 0{
+        didSet{
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
     
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
+    @IBOutlet private var cardButtons: [UIButton]! //same as saying Array<UIButtons>
+    
+    @IBAction private func touchCard(_ sender: UIButton) {
         flipCount += 1
         if let cardNumber = cardButtons.index(of: sender){
             print("cardNumber = \(cardNumber)")
@@ -36,7 +46,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func restartGameButton(_ sender: UIButton) {
+    @IBAction private func restartGameButton(_ sender: UIButton) {
         print("restartGameButton pressed")
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
         emojiChoices = emojiThemeChoices[getRandomTheme()]
@@ -44,7 +54,9 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    fileprivate func updateViewFromModel(){
+    private func updateViewFromModel(){
+        score = game.getScore()
+        print("Score: \(score)")
         for index in cardButtons.indices{
             let button = cardButtons[index]
             let card = game.cards[index]
@@ -59,17 +71,28 @@ class ViewController: UIViewController {
         }
     }
     
-    fileprivate func getRandomTheme() -> Int{
-        return Int(arc4random_uniform(UInt32(emojiThemeChoices.count)))
+    private func getRandomTheme() -> Int{
+        return emojiThemeChoices.count.arc4random
     }
     
-    fileprivate func emoji(for card: Card) -> String{
+    private func emoji(for card: Card) -> String{
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-            let randomIndex = Int (arc4random_uniform(UInt32(emojiChoices.count)))
+            let randomIndex = emojiChoices.count.arc4random
             emoji[card.identifier] = emojiChoices.remove(at: randomIndex);
         }
         return emoji[card.identifier] ?? "?"
     }
-    
+}
+
+extension Int {
+    var arc4random:Int{
+        if (self > 0){
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(self)))
+        } else {
+            return 0
+        }
+    }
 }
 
