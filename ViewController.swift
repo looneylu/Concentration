@@ -31,6 +31,12 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func restartGameButton(_ sender: UIButton) {
+        print("restartGameButton pressed")
+        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        updateViewFromModel()
+    }
+    
     func updateViewFromModel(){
         for index in cardButtons.indices{
             let button = cardButtons[index]
