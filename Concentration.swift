@@ -10,6 +10,12 @@ import Foundation
 
 class Concentration {
     var cards = [Card]() //Array<Card>()
+    private var score = 0;
+    
+    func getScore() -> Int {
+        return score
+    }
+    
     private(set) var indexOfOneAndOnlyFaceUpCard: Int?{
         get{
             var foundIndex: Int?
@@ -39,6 +45,9 @@ class Concentration {
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    score += 2
+                } else {
+                    score -= 1
                 }
                 cards[index].isFaceUp = true
             } else {

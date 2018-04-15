@@ -55,6 +55,7 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel(){
+        score = game.getScore()
         print("Score: \(score)")
         for index in cardButtons.indices{
             let button = cardButtons[index]
